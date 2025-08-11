@@ -1,10 +1,7 @@
 # Weather Stream (Reolink → FFmpeg → YouTube, 12h auto-rotation)
 
 Continuous livestream from a Reolink (optimized for **RLC‑810WA** on **Raspberry Pi 4**) to YouTube, running on a Raspberry Pi 4 or any Linux host.  
-
-   
-    Keeps secrets out of code
-
+Livestream starts at midnight and noon (Configurable in .env)
 
 
 ## Features
