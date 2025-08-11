@@ -1,0 +1,20 @@
+[Unit]
+Description=Weather RTSP to YouTube 12h Rotator
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=<youruser>
+WorkingDirectory=/srv/weather-stream
+EnvironmentFile=/srv/weather-stream/.env
+ExecStart=/srv/weather-stream/.venv/bin/python /srv/weather-stream/stream_orchestrator.py
+Restart=always
+RestartSec=10
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
