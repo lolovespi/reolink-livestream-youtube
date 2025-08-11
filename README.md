@@ -37,15 +37,15 @@ Continuous livestream from a Reolink (optimized for **RLC‑810WA** on **Raspber
   - A **YouTube reusable stream** in YouTube Studio (for a stable stream key)
 
 ## 2) Project Layout
-weather-stream/
-├── .env.example
-├── ffmpeg_args.py
-├── stream_orchestrator.py
-├── titles.py
-├── youtube_api.py
-├── requirements.txt
-└── systemd/
-    └── weather-stream.service
+    weather-stream/
+        .env.example
+        ffmpeg_args.py
+        stream_orchestrator.py
+        titles.py
+        youtube_api.py
+        requirements.txt
+        systemd/
+            weather-stream.service
 ---
 
 ## 3) Install
