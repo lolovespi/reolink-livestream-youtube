@@ -219,3 +219,11 @@ def find_stream_by_key(service, stream_key: str) -> str | None:
         tok = resp.get("nextPageToken")
         req = service.liveStreams().list(part="id,cdn", mine=True, maxResults=50, pageToken=tok) if tok else None
     return None
+
+def update_broadcast_snippet(service, broadcast_id: str, *, title: str | None = None, scheduled_start_iso: str | None = None):
+    body = {"id": broadcast_id, "snippet": {}}
+    if title is not None:
+        body["snippet"]["title"] = title
+    if scheduled_start_iso is not None:
+        body["snippet"]["scheduledStartTime"] = scheduled_start_iso
+    return service.liveBroadcasts().update(part="snippet", body=body).execute()
