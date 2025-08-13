@@ -194,36 +194,3 @@ def find_reusable_broadcast(service, stream_id: str):
     # Pick best candidate across all statuses
     candidate = best_of(all_items)
     return candidate
-
-def get_stream_ingestion_key(service, stream_id: str) -> str | None:
-    """Returns ingestionInfo.streamName (the stream key) for a given stream."""
-    resp = service.liveStreams().list(part="cdn", id=stream_id).execute()
-    items = resp.get("items", [])
-    if not items:
-        return None
-    cdn = items[0].get("cdn") or {}
-    ing = cdn.get("ingestionInfo") or {}
-    return ing.get("streamName")
-
-
-def find_stream_by_key(service, stream_key: str) -> str | None:
-    """Find your stream ID whose ingestion key matches stream_key."""
-    req = service.liveStreams().list(part="id,cdn", mine=True, maxResults=50)
-    while req is not None:
-        resp = req.execute()
-        for s in resp.get("items", []):
-            cdn = s.get("cdn") or {}
-            ing = cdn.get("ingestionInfo") or {}
-            if ing.get("streamName") == stream_key:
-                return s["id"]
-        tok = resp.get("nextPageToken")
-        req = service.liveStreams().list(part="id,cdn", mine=True, maxResults=50, pageToken=tok) if tok else None
-    return None
-
-def update_broadcast_snippet(service, broadcast_id: str, *, title: str | None = None, scheduled_start_iso: str | None = None):
-    body = {"id": broadcast_id, "snippet": {}}
-    if title is not None:
-        body["snippet"]["title"] = title
-    if scheduled_start_iso is not None:
-        body["snippet"]["scheduledStartTime"] = scheduled_start_iso
-    return service.liveBroadcasts().update(part="snippet", body=body).execute()

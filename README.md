@@ -1,7 +1,10 @@
 # Weather Stream (Reolink → FFmpeg → YouTube, 12h auto-rotation)
 
 Continuous livestream from a Reolink (optimized for **RLC‑810WA** on **Raspberry Pi 4**) to YouTube, running on a Raspberry Pi 4 or any Linux host.  
-Livestream starts at midnight and noon (Configurable in .env)
+
+   
+    Keeps secrets out of code
+
 
 
 ## Features
@@ -152,7 +155,7 @@ Recommendation: Use absolute paths in .env to avoid systemd expansion issues.
     
     Stop with Ctrl+C.
 
-## 9) Install as systemdservice
+## 9) Install as systemd service
         ```bash
         sudo cp systemd/weather-stream.service /etc/systemd/system/weather-stream.service
         sudoedit /etc/systemd/system/weather-stream.service
@@ -179,11 +182,12 @@ Recommendation: Use absolute paths in .env to avoid systemd expansion issues.
 
             [Install]
             WantedBy=multi-user.target
+   
     Enable & start:
-        ```bash
-        sudo systemctl daemon-reload
-        sudo systemctl enable --now weather-stream.service
-        journalctl -u weather-stream.service -f
+            ```bash
+            sudo systemctl daemon-reload
+            sudo systemctl enable --now weather-stream.service
+            journalctl -u weather-stream.service -f
 
 ## 10) Log rotation (FFmpeg logs)
     Create a logrotate rule (adjust path if your LOG_DIR differs):
@@ -220,7 +224,7 @@ Recommendation: Use absolute paths in .env to avoid systemd expansion issues.
         # one-time prune:
         sudo journalctl --vacuum-time=14d
 
-##11 11) How it works (quick internals)
+## 11) How it works (quick internals)
 
     Titles generated with zoneinfo → weather stream – mm/dd/yy (Morning|Afternoon)
 
